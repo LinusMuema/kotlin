@@ -28,5 +28,5 @@ fun Context.showToast(){
 }
 
 fun showSnackbar(view: View){
-    Snackbar.make(view, random(), Snackbar.LENGTH_LONG).show()
+    Snackbar.make(view,"Random characters: ${random()}", Snackbar.LENGTH_LONG).show()
 }

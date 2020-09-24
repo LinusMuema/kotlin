@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val imageUrl = "https://drive.google.com/thumbnail?id=11W-vdMfCgHOZf-kFpU0vJbWuFt3whdfC"
+        val imageUrl = "https://lh3.googleusercontent.com/d/11W-vdMfCgHOZf-kFpU0vJbWuFt3whdfC=s220?authuser=0"
         url_image.loadUrl(imageUrl)
         drawable_image.loadDrawable(R.drawable.ic_android)
         random.randomText()
