@@ -8,11 +8,12 @@ import com.moose.androidkt.network.User
 import com.moose.androidkt.network.Users
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 
 @Dao
 interface Dao {
     @Query("SELECT * FROM user WHERE id=:id")
-    fun getOneUser(id: Int): Observable<List<User>>
+    fun getOneUser(id: Int): Single<List<User>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addUsers(users: Users): Completable
