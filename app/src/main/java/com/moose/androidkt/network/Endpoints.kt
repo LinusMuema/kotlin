@@ -2,7 +2,7 @@ package com.moose.androidkt.network
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 
 class Users : ArrayList<User>()
@@ -13,5 +13,5 @@ data class User(@PrimaryKey val id: Int, val email: String, val name: String, va
 interface Endpoints {
 
     @GET("/users")
-    fun getUsers(): Observable<Users>
+    fun getUsers(): Single<Users>
 }
