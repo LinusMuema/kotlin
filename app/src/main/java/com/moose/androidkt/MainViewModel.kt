@@ -21,7 +21,6 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         composite.add(
             Service.retrofit().getUsers()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
                 .subscribe(
                     {
                         data.value = it.toString()

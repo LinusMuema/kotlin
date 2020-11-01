@@ -1,5 +1,6 @@
 package com.moose.androidkt.network
 
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -13,7 +14,7 @@ object Service {
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()
