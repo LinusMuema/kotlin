@@ -10,11 +10,14 @@ class Worker(context: Context, params: WorkerParameters): Worker(context, params
 
     override fun doWork(): Result {
         return try {
-            val output = workDataOf(Users.WORK_KEY to Users.getOne().toString())
+            val output = workDataOf(
+                "USER_NAME" to Users.getName(),
+                "USER_NUMBER" to Users.getNumber(),
+                "USER_IMAGE" to Users.getImage())
             Result.success(output)
         }
         catch (e: Exception){
-            val exception = workDataOf(Users.WORK_KEY to e.localizedMessage)
+            val exception = workDataOf("WORK_ERROR" to e.localizedMessage)
             Result.failure(exception)
         }
     }

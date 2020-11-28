@@ -1,6 +1,7 @@
 package com.moose.androidkt.ui
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.work.Constraints
