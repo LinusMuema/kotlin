@@ -1,20 +1,24 @@
 package com.moose.androidkt.ui
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import com.moose.androidkt.data.Data
+import androidx.work.*
 import com.moose.androidkt.data.User
-import com.moose.androidkt.work.Worker
+import com.moose.androidkt.db.AppDatabase
+import com.moose.androidkt.work.Work
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class MainActivityViewmodel(application: Application): AndroidViewModel(application) {
 
-    val users: MutableLiveData<ArrayList<User>> = MutableLiveData()
+    val users: MutableLiveData<List<User>> = MutableLiveData()
+    val exception: MutableLiveData<String> = MutableLiveData()
+
+    private val composite = CompositeDisposable()
+    private val dao = AppDatabase.getDatabase(application).dao()
 
     // WorkManager instance
     private val manager = WorkManager.getInstance(application)
@@ -25,17 +29,37 @@ class MainActivityViewmodel(application: Application): AndroidViewModel(applicat
         .setRequiresBatteryNotLow(true)
         .build()
 
-    // Define the work
-    private val work = OneTimeWorkRequestBuilder<Worker>().setConstraints(constraints).build()
+    // Define OneTime work
+    private val oneTimeWorker = OneTimeWorkRequest.Builder(Work::class.java)
+        .setConstraints(constraints)
+        .build()
 
-    // The work info
-    val workInfo = manager.getWorkInfoByIdLiveData(work.id)
+    private val periodicWork = PeriodicWorkRequest.Builder(Work::class.java, 15, TimeUnit.MINUTES)
+        .setConstraints(constraints)
+        .build()
 
     fun getUsers(){
-        users.value = Data.get()
+        composite.add(
+            dao.getUsers()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.computation())
+                .subscribe(
+                    {users.value = it},
+                    {exception.value = it.message})
+        )
     }
 
-    fun getUpdate(){
-        manager.enqueue(work)
+    fun clearDb(){
+        composite.add(dao.deleteUsers().subscribeOn(Schedulers.io()).subscribe())
     }
+
+    fun startWork(){
+        manager.enqueue(listOf(oneTimeWorker, periodicWork))
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        composite.dispose()
+    }
+
 }

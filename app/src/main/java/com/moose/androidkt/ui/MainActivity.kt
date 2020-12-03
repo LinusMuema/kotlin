@@ -12,13 +12,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity: AppCompatActivity() {
 
     private lateinit var viewmodel: MainActivityViewmodel
-    private val users: ArrayList<User> = ArrayList()
+    private val users:ArrayList<User> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         viewmodel = ViewModelProvider(this).get(MainActivityViewmodel::class.java)
+        viewmodel.startWork()
         viewmodel.getUsers()
 
         recyclerview.apply {
@@ -26,28 +27,18 @@ class MainActivity: AppCompatActivity() {
             adapter = ListAdapter(users)
         }
 
-        btn_add.setOnClickListener {
-            viewmodel.getUpdate()
+        btn_clear.setOnClickListener {
+            viewmodel.clearDb()
         }
 
         viewmodel.users.observe(this, {
+            users.clear()
             users.addAll(it)
+            recyclerview.adapter!!.notifyDataSetChanged()
         })
 
-        viewmodel.workInfo.observe(this, {
-            if (it.state.isFinished) {
-                val workError = it.outputData.getString("WORK_ERROR")
-                if (workError != null) {
-                    Toast.makeText(this, workError, Toast.LENGTH_SHORT).show()
-                } else {
-                    val userName = it.outputData.getString("USER_NAME")!!
-                    val userNumber = it.outputData.getInt("USER_NUMBER", 0)
-                    val userImage = it.outputData.getString("USER_IMAGE")!!
-                    Log.d("users", "onCreate: $userName")
-                    users.add(User(userName, userNumber, userImage))
-                    recyclerview.adapter!!.notifyDataSetChanged()
-                }
-            }
+        viewmodel.exception.observe(this, {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
     }
 }

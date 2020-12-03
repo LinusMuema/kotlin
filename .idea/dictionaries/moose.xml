@@ -1,3 +1,8 @@
 <component name="ProjectDictionaryState">
-  <dictionary name="moose" />
+  <dictionary name="moose">
+    <words>
+      <w>gson</w>
+      <w>viewmodel</w>
+    </words>
+  </dictionary>
 </component>
