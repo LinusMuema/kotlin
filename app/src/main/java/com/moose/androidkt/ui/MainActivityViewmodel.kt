@@ -34,6 +34,7 @@ class MainActivityViewmodel(application: Application): AndroidViewModel(applicat
         .setConstraints(constraints)
         .build()
 
+    // Define Periodic work
     private val periodicWork = PeriodicWorkRequest.Builder(Work::class.java, 15, TimeUnit.MINUTES)
         .setConstraints(constraints)
         .build()
