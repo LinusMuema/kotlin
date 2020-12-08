@@ -18,9 +18,12 @@ class UsersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val listAdapter = ListAdapter(Data.getUsers()){}
+
         recyclerview.apply {
             setHasFixedSize(true)
-            adapter = ListAdapter(Data.getUsers())
+            adapter = listAdapter
         }
     }
 }

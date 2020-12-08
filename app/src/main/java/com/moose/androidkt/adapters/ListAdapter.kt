@@ -9,7 +9,7 @@ import com.moose.androidkt.R
 import com.moose.androidkt.data.User
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class ListAdapter(private val data: List<User>): RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
+class ListAdapter(private val data: List<User>, private val click: (id: Int) -> Unit): RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         return ListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false))
@@ -21,12 +21,16 @@ class ListAdapter(private val data: List<User>): RecyclerView.Adapter<ListAdapte
 
     override fun getItemCount(): Int = data.size
 
-    class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bind(user: User) {
             Glide.with(itemView.context).load(user.image).into(itemView.profile)
             itemView.name.text = user.name
             itemView.phone.text = user.number.toString()
+
+            itemView.setOnClickListener {
+                click(user.id)
+            }
         }
 
     }
