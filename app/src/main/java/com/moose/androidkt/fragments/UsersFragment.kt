@@ -23,6 +23,8 @@ class UsersFragment : Fragment() {
 
         val listAdapter = ListAdapter(Data.getUsers()){
             // Add the navigation here
+            val action = UsersFragmentDirections.actionUsersFragmentToProfileFragment(it)
+            findNavController().navigate(action)
         }
 
         recyclerview.apply {

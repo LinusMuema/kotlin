@@ -17,4 +17,15 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val args: ProfileFragmentArgs by navArgs()
+        val user = Data.getUser(args.userId)
+
+        Glide.with(requireContext()).load(user.image).into(image)
+        name.text = resources.getString(R.string.name, user.name)
+        number.text = resources.getString(R.string.number, user.number.toString())
+    }
 }

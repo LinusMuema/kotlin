@@ -15,7 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-        <!-- Add the navigation graph here -->
+            <!-- Add the navigation graph here -->
+            <nav-graph android:value="@navigation/nav_graph"/>
+
         </activity>
     </application>
 

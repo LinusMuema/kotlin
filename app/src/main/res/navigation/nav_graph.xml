@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/users_fragment">
 
     <!-- Add the destinations and actions here -->
+
+    <fragment
+        android:id="@+id/users_fragment"
+        android:name="com.moose.androidkt.fragments.UsersFragment"
+        android:label="fragment_users"
+        tools:layout="@layout/fragment_users">
+
+        <action
+            android:id="@+id/action_users_fragment_to_profile_fragment"
+            app:destination="@id/profile_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/profile_fragment"
+        android:name="com.moose.androidkt.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile">
+
+        <argument android:name="userId" android:defaultValue="1" app:argType="integer"/>
+
+        <deepLink app:uri="www.example.com/{userId}"/>
+
+    </fragment>
 
 </navigation>
