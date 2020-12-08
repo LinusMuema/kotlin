@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/users_fragment">
+
+    <fragment
+        android:id="@+id/users_fragment"
+        android:name="com.moose.androidkt.fragments.UsersFragment"
+        android:label="fragment_users"
+        tools:layout="@layout/fragment_users" >
+        <action
+            android:id="@+id/action_users_fragment_to_profile_fragment"
+            app:destination="@id/profile_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/profile_fragment"
+        android:name="com.moose.androidkt.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/deep_link_fragment"
+        android:name="com.moose.androidkt.fragments.DeepLinkFragment"
+        android:label="fragment_deep_link"
+        tools:layout="@layout/fragment_deep_link" />
+
+    <action
+        android:id="@+id/action_to_deep_link_fragment"
+        app:destination="@id/deep_link_fragment"/>
 
 </navigation>
