@@ -20,7 +20,7 @@ class UsersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerview.apply {
             setHasFixedSize(true)
-            adapter = ListAdapter(Data.get())
+            adapter = ListAdapter(Data.getUsers())
         }
     }
 }
