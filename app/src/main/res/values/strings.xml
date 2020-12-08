@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">Android.kt</string>
-    <string name="number"><b>Number : </b>%1$s</string>
-    <string name="name"><b>Name : </b>%1$s</string>
+    <string name="string"><b>Name : </b>%1$s</string>
 </resources>
