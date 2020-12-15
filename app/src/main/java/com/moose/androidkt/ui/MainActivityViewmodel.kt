@@ -24,8 +24,18 @@ class MainActivityViewmodel(application: Application): AndroidViewModel(applicat
     // WorkManager instance
     private val manager = WorkManager.getInstance(application)
 
-    private val rxWork = PeriodicWorkRequestBuilder<RxWork>(15, TimeUnit.MINUTES).build()
-    private val coroutinesWork = PeriodicWorkRequestBuilder<CoroutineWork>(15, TimeUnit.MINUTES).build()
+    // Create our data
+    private fun getData() = Data.Builder().putInt("USER_ID", (9999..99999).random()).build()
+
+    // Work using RxJava
+    private val rxWork = PeriodicWorkRequestBuilder<RxWork>(15, TimeUnit.MINUTES)
+        .setInputData(getData())
+        .build()
+
+    // Work using coroutines
+    private val coroutinesWork = PeriodicWorkRequestBuilder<CoroutineWork>(15, TimeUnit.MINUTES)
+        .setInputData(getData())
+        .build()
 
     fun startWork(){
         manager.enqueue(listOf(rxWork, coroutinesWork))
