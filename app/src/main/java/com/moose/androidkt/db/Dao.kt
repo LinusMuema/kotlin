@@ -17,7 +17,7 @@ interface Dao {
     fun addRxUser(user: User): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addCoroutineUsers(users: User)
+    fun addCoroutineUser(users: User)
 
     @Query("DELETE FROM user")
     fun deleteUsers(): Completable
