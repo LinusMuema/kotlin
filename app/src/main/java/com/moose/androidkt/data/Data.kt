@@ -10,12 +10,10 @@ object Data {
 
     private val names = arrayListOf("John Doe", "Linus Moose", "Peter Kay", "Dankat Dennis", "Mick Jagger", "Jane Doe", "Lorem Ipsum", "Jenny clyde", "Missy clark", "Kate Hudson")
 
-    fun getUser(): User {
-        return User(
-            names.random(),
-            (9999..99999).random(),
-            "https://randomuser.me/api/portraits/lego/${(0..5).random()}.jpg"
-        )
-    }
+    fun getUser(): User =
+        User(names.random(), (9999..99999).random(), "https://randomuser.me/api/portraits/lego/${(0..5).random()}.jpg")
+
+    fun getUserByNumber(number: Int): User =
+        User(names.random(), number, "https://randomuser.me/api/portraits/lego/${(0..5).random()}.jpg")
 
 }

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.work.*
 import com.moose.androidkt.data.User
 import com.moose.androidkt.db.AppDatabase
-import com.moose.androidkt.work.Work
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -29,15 +28,10 @@ class MainActivityViewmodel(application: Application): AndroidViewModel(applicat
         .setRequiresBatteryNotLow(true)
         .build()
 
-    // Define OneTime work
-    private val oneTimeWorker = OneTimeWorkRequest.Builder(Work::class.java)
-        .setConstraints(constraints)
-        .build()
+    fun startWork(){
+        // start work here
+    }
 
-    // Define Periodic work
-    private val periodicWork = PeriodicWorkRequest.Builder(Work::class.java, 15, TimeUnit.MINUTES)
-        .setConstraints(constraints)
-        .build()
 
     fun getUsers(){
         composite.add(
@@ -52,10 +46,6 @@ class MainActivityViewmodel(application: Application): AndroidViewModel(applicat
 
     fun clearDb(){
         composite.add(dao.deleteUsers().subscribeOn(Schedulers.io()).subscribe())
-    }
-
-    fun startWork(){
-        manager.enqueue(listOf(oneTimeWorker, periodicWork))
     }
 
     override fun onCleared() {
