@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.work.*
 import com.moose.androidkt.data.User
 import com.moose.androidkt.db.AppDatabase
+import com.moose.androidkt.work.CoroutineWork
+import com.moose.androidkt.work.RxWork
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -22,14 +24,11 @@ class MainActivityViewmodel(application: Application): AndroidViewModel(applicat
     // WorkManager instance
     private val manager = WorkManager.getInstance(application)
 
-    // Our work constraints
-    private val constraints = Constraints.Builder()
-        .setRequiredNetworkType(NetworkType.CONNECTED)
-        .setRequiresBatteryNotLow(true)
-        .build()
+    private val rxWork = PeriodicWorkRequestBuilder<RxWork>(15, TimeUnit.MINUTES).build()
+    private val coroutinesWork = PeriodicWorkRequestBuilder<CoroutineWork>(15, TimeUnit.MINUTES).build()
 
     fun startWork(){
-        // start work here
+        manager.enqueue(listOf(rxWork, coroutinesWork))
     }
 
 
