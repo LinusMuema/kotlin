@@ -14,7 +14,10 @@ interface Dao {
     fun getUsers(): Flowable<List<User>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addUsers(users: User): Completable
+    fun addRxUser(user: User): Completable
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addCoroutineUsers(users: User)
 
     @Query("DELETE FROM user")
     fun deleteUsers(): Completable
