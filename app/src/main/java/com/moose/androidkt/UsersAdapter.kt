@@ -25,7 +25,7 @@ private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<User>() {
         oldItem.number == newItem.number
 
     override fun areContentsTheSame(oldItem: User, newItem: User) =
-        oldItem.number == newItem.number
+        oldItem == newItem
 
 }
 
